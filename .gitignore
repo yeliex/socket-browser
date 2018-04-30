@@ -1,0 +1,9 @@
+node_modules/
+.idea/
+.vscode/
+logs/
+!.gitkeep
+.DS_Store
+dist/
+build/
+yarn-error.log
