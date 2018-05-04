@@ -9,6 +9,8 @@ import 'node.date-time';
 import './libs/runtime';
 import Store from './models';
 import Routers from './routers';
+
+import './style/ant.plain.less';
 import './style/index.less';
 
 import('./style/fonticon/css/fontawesome.css');

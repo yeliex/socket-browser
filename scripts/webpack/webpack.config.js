@@ -38,8 +38,7 @@ const babelOptions = {
       require.resolve('babel-plugin-import'),
       {
         libraryName: 'antd',
-        libraryDirectory: 'es',
-        style: true
+        libraryDirectory: 'es'
       }
     ]
   ]
@@ -106,7 +105,7 @@ module.exports = (config) => {
       },
       {
         test: /\.less$/,
-        include: /node_modules/,
+        include: /(node_modules)|(\.plain\.less$)/,
         use: [
           MiniCssExtractPlugin.loader,
           {
@@ -124,15 +123,14 @@ module.exports = (config) => {
             loader: require.resolve('less-loader'),
             options: {
               javascriptEnabled: true,
-              sourceMap: true,
-              modifyVars: {}
+              sourceMap: true
             }
           }
         ]
       },
       {
         test: /\.less$/,
-        exclude: /node_modules/,
+        exclude: /(node_modules)|(\.plain\.less$)/,
         use: [
           MiniCssExtractPlugin.loader,
           {

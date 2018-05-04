@@ -1,8 +1,28 @@
 @import "./theme";
 
 :global {
+  #react-root,
+  #react-root > .main,
+  #react-root > .main > .main,
+  #react-root > .main > .side,
+  #react-root > .main > .side > .ant-menu {
+    height: 100%;
+  }
+
+  #react-root > .main {
+    height: calc(100% - 68px);
+  }
+
   body {
     color: @text-color;
   }
 
+  a {
+    color: @text-color;
+
+    &:hover,
+    &:active {
+      color: @link-hover-color !important;
+    }
+  }
 }

@@ -3,7 +3,7 @@ import { Router, Route, IndexRedirect, Redirect, IndexRoute } from 'react-router
 import App from '../pages/App';
 import Navigation from '../components/Navigation';
 import Sidebar from '../components/Sidebar';
-import Container from '../components/Container';
+import MainWrapper from '../components/MainWrapper';
 import loader from '../components/Import';
 
 const Routers = ({ history }) => (
@@ -12,17 +12,16 @@ const Routers = ({ history }) => (
 
       <Route component={Sidebar}>
 
-        <Route path="/" component={Container}>
+        <Route path="/" component={MainWrapper}>
           <IndexRoute component={loader(() => import('../pages/home'))} />
+
+          <Route path="*" component={loader(() => import('../pages/error'))} />
         </Route>
       </Route>
 
       <Route path="/error">
         <Route path=":code" component={loader(() => import('../pages/error'))} />
       </Route>
-
-      <Route path="*" component={loader(() => import('../pages/error'))} />
-
     </Route>
   </Router>
 );

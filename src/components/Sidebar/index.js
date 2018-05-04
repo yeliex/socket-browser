@@ -1,8 +1,14 @@
 import React, { Component, cloneElement } from 'react';
 import { Col, Menu, Icon } from 'antd';
 import { connect } from 'react-redux';
+import classnames from 'classnames';
+import Style from './index.less';
 
-@connect()
+@connect((workspace) => {
+  return {
+    sidebar: workspace.sidebar
+  };
+})
 export default class Sidebar extends Component {
   renderList = () => {
 
@@ -10,12 +16,17 @@ export default class Sidebar extends Component {
 
   render() {
     return [
-      <aside key="aside">
-        side
-      </aside>,
-      (Array.isArray(this.props.children) ? this.props.children : [this.props.children]).map((child, index) => {
-        return cloneElement(child, { key: index });
-      })
+      <Col span={3} key="side" className="side">
+        <Menu theme="dark" mode="inline">
+          <Menu.Item key="1">
+            <Icon type="pie-chart" />
+            <span>Option 1</span>
+          </Menu.Item>
+        </Menu>
+      </Col>,
+      <Col span={21} key="main" className={classnames('main', Style.main)}>
+        {this.props.children}
+      </Col>
     ];
   }
 }

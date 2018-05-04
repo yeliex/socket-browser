@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { kebabCase } from 'lodash';
+import './index.less';
 
 const FAModes = {
   regular: 'far',
@@ -16,23 +17,58 @@ export default class Icon extends Component {
     type: PropTypes.string.isRequired,
     mode: PropTypes.string,
     className: PropTypes.string,
-    style: PropTypes.object
+    style: PropTypes.object,
+    hovering: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
   };
 
   static defaultProps = {
     source: 'fa',
-    mode: 'brands',
+    mode: 'regular',
     className: undefined,
     style: {}
   };
 
-  renderClass = () => {
-    return classnames(this.props.source, FAModes[this.props.mode] || this.props.mode, kebabCase(`fa-${this.props.type}`), this.props.className);
+  constructor(props) {
+    super(props);
+    this.state = {
+      hovering: false
+    };
+  }
+
+  handleMouseEnter = () => {
+    this.setState({ hovering: true });
+  };
+
+  handleMouseLeave = () => {
+    this.setState({ hovering: false });
+  };
+
+  renderClass = (props = this.props) => {
+    return classnames(
+      props.source,
+      FAModes[props.mode] || props.mode,
+      kebabCase(`fa-${props.type}`),
+      props.className,
+      { 'fa--hoverable': props.hovering }
+    );
   };
 
   render() {
+    let { props } = this;
+
+    if (this.state.hovering) {
+      props = typeof this.props.hovering === 'string' ? {
+        type: this.props.hovering
+      } : this.props.hovering;
+    }
+
+    const mouseProps = this.props.hovering ? {
+      onMouseEnter: this.handleMouseEnter,
+      onMouseLeave: this.handleMouseLeave
+    } : {};
+
     return (
-      <i className={this.renderClass()} style={this.props.style} />
+      <i {...mouseProps} className={this.renderClass(props)} style={this.props.style} />
     );
   }
 }
